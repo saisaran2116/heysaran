@@ -1,0 +1,4 @@
+PySide6-Essentials>=6.8,<7
+vosk>=0.3.42,<0.4
+sounddevice>=0.5,<0.6
+pynput>=1.8,<2

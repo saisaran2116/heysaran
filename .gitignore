@@ -1,0 +1,41 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Virtual Environment
+.venv/
+env/
+venv/
+
+# Environment variables & secrets
+.env
+.env.local
+
+# macOS system files
+.DS_Store
+
+# Logs
+logs/*.log
+
+# Hey Baby local installation
+.hey-baby-venv/
+models/vosk-model-*/
+
+# Mac app build
+/build/
+/dist/
+
+# Studio web workspace
+/studio/node_modules/
+/studio/dist/
+/studio/.env.*
+!/studio/.env.example
+
+# Local output and unrelated coursework
+*.mp3
+*.wav
+/logs/
+/kalvium-rag/

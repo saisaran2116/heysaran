@@ -1,0 +1,43 @@
+services:
+  studio:
+    build: .
+    ports: ["127.0.0.1:3000:3000"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://studio:studio_local@postgres:5432/studio
+      MONGO_URL: mongodb://mongo:27017
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      postgres: { condition: service_healthy }
+      mongo: { condition: service_healthy }
+      redis: { condition: service_healthy }
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: studio
+      POSTGRES_PASSWORD: studio_local
+      POSTGRES_DB: studio
+    volumes: [postgres:/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD, pg_isready, -U, studio]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+  mongo:
+    image: mongo:8
+    volumes: [mongo:/data/db]
+    healthcheck:
+      test: [CMD, mongosh, --quiet, --eval, 'db.adminCommand({ping:1})']
+      interval: 3s
+      timeout: 4s
+      retries: 20
+  redis:
+    image: redis:7
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+volumes:
+  postgres:
+  mongo:

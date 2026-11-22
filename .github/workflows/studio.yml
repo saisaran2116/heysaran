@@ -1,0 +1,24 @@
+name: Studio checks
+on: [push, pull_request]
+permissions:
+  contents: read
+defaults:
+  run:
+    working-directory: studio
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: studio/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - run: cp env.test .env && docker compose up -d --build
+      - run: curl --fail --retry 15 --retry-connrefused --retry-delay 2 http://localhost:3000/api/health
+      - run: TEST_STUDIO_URL=http://localhost:3000 npm test
+      - if: always()
+        run: docker compose down -v
