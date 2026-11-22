@@ -118,3 +118,8 @@ workspace. Run `.hey-baby-venv/bin/python -m unittest discover` for the tests.
 See [Studio setup](studio/README.md) and the [63-item assessment checklist](studio/RUBRIC.md).
 Studio handles saved notes, command presets, and account services. Run it separately
 from the local desktop assistant.
+
+## Contributors
+
+- [Gaddanti Sai Saran](https://github.com/saisaran2116)
+- [Akshay Wesley Kothapalli](https://github.com/akshaywesleykothapalli)
