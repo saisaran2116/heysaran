@@ -18,7 +18,9 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: cp env.test .env && docker compose up -d --build
-      - run: curl --fail --retry 15 --retry-connrefused --retry-delay 2 http://localhost:3000/api/health
+      - run: curl --fail --retry 15 --retry-all-errors --retry-delay 2 --connect-timeout 5 --max-time 10 http://localhost:3000/api/health
       - run: TEST_STUDIO_URL=http://localhost:3000 npm test
+      - if: failure()
+        run: docker compose logs --tail=100
       - if: always()
         run: docker compose down -v
